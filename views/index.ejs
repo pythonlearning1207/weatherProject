@@ -4,8 +4,115 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>weatherProject</title>
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <p><%= content %></p>
+    <div class="container">
+        
+        <!-- Enter city info -->
+        <div class="location">
+            <form action="/submit" method="POST">
+                <label for="cityName">City</label>
+                <input type="text" id="cityName" name="cityName">
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+
+        <!-- Next 6 hours forecast -->
+        <div class="hourly">
+            <h2>HOURLY FORECAST</h2>
+            <div class="hourlyData">
+                <div>
+                    <h3><%= hoursinfo[0] %></h3>
+                    <h3><%= tempsinfo[0] %>°</h3>
+                </div>
+                <div>
+                    <h3><%= hoursinfo[1] %></h3>
+                    <h3><%= tempsinfo[1] %>°</h3>
+                </div>
+                <div>
+                    <h3><%= hoursinfo[2] %></h3>
+                    <h3><%= tempsinfo[2] %>°</h3>
+                </div>
+                <div>
+                    <h3><%= hoursinfo[3] %></h3>
+                    <h3><%= tempsinfo[3] %>°</h3>
+                </div>
+                <div>
+                    <h3><%= hoursinfo[4] %></h3>
+                    <h3><%= tempsinfo[4] %>°</h3>
+                </div>
+                <div>
+                    <h3><%= hoursinfo[5] %></h3>
+                    <h3><%= tempsinfo[5] %>°</h3>
+                </div>
+            </div>
+        </div>
+
+        <!-- current weather info -->
+        <div class="current">
+            <div class="current-weather">
+                <h1><%= cityName %></h1>
+                <h2><%= currentTemp %></h2>
+                <p><%= description %></p>
+            </div>
+            <div class="feelslike">
+                <h2>FEELS LIKE</h2>
+                <h2><%= feelslike %>°</h2>
+            </div>
+            <div class="precipitation">
+                <h2>PRECIPITATION</h2>
+                <h2><%= precipitation %>%</h2>
+            </div>
+            <div class="visibility">
+                <h2>VISIBILITY</h2>
+                <h2><%= visibility %> mi</h2>
+            </div>
+            <div class="humidity">
+                <h2>HUMIDITY</h2>
+                <h2><%= humidity %>%</h2>
+            </div>
+        </div>
+        <!-- next 6 days forecast -->
+        <div class="period">
+            <h2>6-DAY FORECAST</h2>
+            <div class="next-6">
+                <div>
+                    <h2><%= datesTime[0] %></h2>
+                    <%= daysTemps[0] %>°
+                </div>
+                <div>
+                    <h2><%= datesTime[1] %></h2>
+                    <%= daysTemps[1] %>°
+                </div>
+                <div>
+                    <h2><%= datesTime[2] %></h2>
+                    <%= daysTemps[2] %>°
+                </div>
+                <div>
+                    <h2><%= datesTime[3] %></h2>
+                    <%= daysTemps[3] %>°
+                </div>
+                <div>
+                    <h2><%= datesTime[4] %></h2>
+                    <%= daysTemps[4] %>°
+                </div>
+                <div>
+                    <h2><%= datesTime[5] %></h2>
+                    <%= daysTemps[5] %>°
+                </div>
+            </div>
+        </div>
+        <div class="UV">
+            <h2>UV INDEX</h2>
+            <h3><%= uvLevel %></h3>
+        </div>
+        <div class="wind">
+            <h2>WIND</h2>
+            <h3><%= windspeed %>MPH</h3>
+        </div>
+
+    </div>
+    
 </body>
 </html>
