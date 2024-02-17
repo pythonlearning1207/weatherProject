@@ -69,9 +69,8 @@ app.get('/', async(req, res)=>{
             condition: condition,
         })
     } catch (error) {
-        console.error('Error fetching weather data:', error);
-        res.send('Failed to fetch weather data');
-        return;
+        console.error('Error fetching weather data:', error.data);
+        res.status(400).json({error: 'Invalid location.'})
     }
    
 })
@@ -134,8 +133,7 @@ app.post('/submit', async(req, res)=>{
 
     } catch (error) {
         console.error('Error fetching weather data:', error);
-        res.send('Failed to fetch weather data');
-        return;
+        res.status(400).render("error.ejs", { message: 'Invalid location.'})
     }
     
 })
