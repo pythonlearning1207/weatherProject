@@ -22,6 +22,7 @@ app.get('/', async(req, res)=>{
         const daysTemps = [];
         const datesTime = [];
         const condition = result.data.currentConditions.conditions;
+        const daysConditions = [];
         console.log(condition);
     
         
@@ -49,6 +50,8 @@ app.get('/', async(req, res)=>{
             const dayData = result.data.days[i];
             daysTemps.push(dayData.temp);
             datesTime.push(dayData.datetime.substring(5));
+            const dayCondition = dayData.conditions;
+            daysConditions.push(dayCondition);
         }
 
     
@@ -67,6 +70,7 @@ app.get('/', async(req, res)=>{
             uvLevel: result.data.currentConditions.uvindex,
             windspeed: result.data.currentConditions.windspeed,
             condition: condition,
+            dayCondition: daysConditions,
         })
     } catch (error) {
         console.error('Error fetching weather data:', error.data);
@@ -87,6 +91,8 @@ app.post('/submit', async(req, res)=>{
         const today = new Date();
         const now = today.getHours();
         const condition = result.data.currentConditions.conditions;
+        const daysConditions = [];
+        
         console.log(condition);
         if (now <= 18) {
             for (let i = 0; i < 6; i++) {
@@ -98,12 +104,14 @@ app.post('/submit', async(req, res)=>{
             const extrahours = now - 18;
             for (let i = 0; i < (6 - extrahours); i++) {
                 const info = result.data.days[0].hours[now + i];
-                hours.push(info.datatime.substring(0,5));
+                const hourString = (info.datetime).substring(0, 5);
+                hours.push(hourString);
                 temps.push(info.temp);
             }
             for (let i = 0; i < extrahours; i++) {
                 const info = result.data.days[1].hours[i];
-                hours.push(info.datatime.substring(0,5));
+                const hourString = (info.datetime).substring(0, 5);
+                hours.push(hourString);
                 temps.push(info.temp);
             }
         }
@@ -111,8 +119,10 @@ app.post('/submit', async(req, res)=>{
         for (let i = 0; i < 6; i++) {
             const info = result.data.days[i];
             const dateinfo = info.datetime.substring(5);
+            const dayCondition = info.conditions;
             datesTime.push(dateinfo);
             daysTemps.push(info.temp);
+            daysConditions.push(dayCondition);
         }
         res.render('index.ejs', {
             cityName: cityNameCap,
@@ -129,6 +139,7 @@ app.post('/submit', async(req, res)=>{
             datesTime: datesTime,
             uvLevel: result.data.currentConditions.uvindex,
             windspeed: result.data.currentConditions.windspeed,
+            dayCondition: daysConditions,
         })
 
     } catch (error) {
