@@ -8,9 +8,9 @@
 </head>
 <body>
     <div class="container">
-        
+    
         <!-- Enter city info -->
-        <div class="location">
+        <div class="location black-box">
             <form action="/submit" method="POST">
                 <label for="cityName">City</label>
                 <input type="text" id="cityName" name="cityName">
@@ -19,10 +19,10 @@
         </div>
 
         <!-- Next 6 hours forecast -->
-        <div class="hourly">
-            <h2>HOURLY FORECAST</h2>
+        <div class="hourly black-box">
+            <h3>HOURLY FORECAST</h3>
             <div class="hourlyData">
-                <div>
+                <div class="current-hour-box">
                     <h3><%= hoursinfo[0] %></h3>
                     <h3><%= tempsinfo[0] %>°</h3>
                 </div>
@@ -54,30 +54,31 @@
             <div class="current-weather">
                 <h1><%= cityName %></h1>
                 <h2><%= currentTemp %></h2>
+                
                 <p><%= description %></p>
             </div>
-            <div class="feelslike">
-                <h2>FEELS LIKE</h2>
+            <div class="feelslike black-box">
+                <h3>FEELS LIKE</h3>
                 <h2><%= feelslike %>°</h2>
             </div>
-            <div class="precipitation">
-                <h2>PRECIPITATION</h2>
+            <div class="precipitation black-box">
+                <h3>PRECIPITATION</h3>
                 <h2><%= precipitation %>%</h2>
             </div>
-            <div class="visibility">
-                <h2>VISIBILITY</h2>
+            <div class="visibility black-box">
+                <h3>VISIBILITY</h3>
                 <h2><%= visibility %> mi</h2>
             </div>
-            <div class="humidity">
-                <h2>HUMIDITY</h2>
+            <div class="humidity black-box">
+                <h3>HUMIDITY</h3>
                 <h2><%= humidity %>%</h2>
             </div>
         </div>
         <!-- next 6 days forecast -->
-        <div class="period">
-            <h2>6-DAY FORECAST</h2>
+        <div class="period black-box">
+            <h3>6-DAY FORECAST</h3>
             <div class="next-6">
-                <div>
+                <div class="current-day-box">
                     <h2><%= datesTime[0] %></h2>
                     <%= daysTemps[0] %>°
                 </div>
@@ -103,16 +104,39 @@
                 </div>
             </div>
         </div>
-        <div class="UV">
-            <h2>UV INDEX</h2>
-            <h3><%= uvLevel %></h3>
+        <div class="UV black-box">
+            <h3>UV INDEX</h3>
+            <h2><%= uvLevel %></h2>
         </div>
-        <div class="wind">
-            <h2>WIND</h2>
-            <h3><%= windspeed %>MPH</h3>
+        <div class="wind black-box">
+            <h3>WIND</h3>
+            <h2><%= windspeed %>MPH</h2>
         </div>
 
     </div>
     
+    <script>
+        document.addEventListener('DOMContentLoaded', function(){
+            var condition = '<%= condition %>';
+            var backgroundImage;
+            
+            if (condition.includes('Snow')) {
+                backgroundImage = 'snow.jpg';
+            } else if (condition.includes('Rain')) {
+                backgroundImage = 'rain.jpg';
+            } else if(condition.includes('Partially cloudy')){
+                backgroundImage = 'cloudy.jpg';
+            } else if(condition.includes('Overcast')){
+                backgroundImage = 'cloudy.jpg';
+            } else if(condition.includes('Clear')){
+                backgroundImage = 'sunny.jpg';
+            } else {
+                backgroundImage = 'sunny.jgp';
+            }
+
+            document.body.style.backgroundImage = `url('/images/${backgroundImage}')`;
+        })
+    </script>
+
 </body>
 </html>

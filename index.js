@@ -16,26 +16,31 @@ app.get('/', async(req, res)=>{
         // const description = JSON.stringify(result.description);
         // console.log(description);
         // res.render('index.ejs', { content: JSON.stringify(result.data.description)})
+        const cityNameCap = result.data.resolvedAddress;
         const hours = [];
         const temps = [];
         const daysTemps = [];
         const datesTime = [];
+        const condition = result.data.currentConditions.conditions;
+        console.log(condition);
+    
+        
         if (now <= 18) {
             for (let i = 0; i <=5; i++) {   
                 const hourData = result.data.days[0].hours;
-                hours.push(hourData[now + i].datetime);
+                hours.push(hourData[now + i].datetime.substring(0,5));
                 temps.push(hourData[now + i].temp);
             }
         } else {
             const extrahours = now - 18;
             for (let i = 0; i < (6 - extrahours); i++) {
                 const hourData = result.data.days[0].hours[now + i];
-                hours.push(hourData.datetime);
+                hours.push(hourData.datetime.substring(0,5));
                 temps.push(hourData.temp);
             }
             for (let i = 0; i < extrahours; i++) {
                 const hourData = result.data.days[1].hours[i];
-                hours.push(hourData.datetime);
+                hours.push(hourData.datetime.substring(0,5));
                 temps.push(hourData.temp);
             }
         }
@@ -43,12 +48,12 @@ app.get('/', async(req, res)=>{
         for (let i = 0; i < 6; i++) {
             const dayData = result.data.days[i];
             daysTemps.push(dayData.temp);
-            datesTime.push(dayData.datetime);
+            datesTime.push(dayData.datetime.substring(5));
         }
 
     
         res.render("index.ejs", {
-            cityName: location,
+            cityName: cityNameCap,
             currentTemp : result.data.currentConditions.temp + '°',
             description: result.data.description,
             feelslike: result.data.currentConditions.feelslike,
@@ -61,6 +66,7 @@ app.get('/', async(req, res)=>{
             datesTime: datesTime,
             uvLevel: result.data.currentConditions.uvindex,
             windspeed: result.data.currentConditions.windspeed,
+            condition: condition,
         })
     } catch (error) {
         console.error('Error fetching weather data:', error);
@@ -74,28 +80,31 @@ app.post('/submit', async(req, res)=>{
     try {
         const location = req.body.cityName;
         const result = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=YJC2XAH9LBH2SPM46HZS9W38N&contentType=json`);
+        const cityNameCap = result.data.resolvedAddress;
         const hours = [];
         const temps = [];
         const daysTemps = [];
         const datesTime = [];
         const today = new Date();
         const now = today.getHours();
+        const condition = result.data.currentConditions.conditions;
+        console.log(condition);
         if (now <= 18) {
             for (let i = 0; i < 6; i++) {
                 const info = result.data.days[0].hours[now + i];
-                hours.push(info.datetime);
+                hours.push(info.datetime.substring(0,5));
                 temps.push(info.temp);
             }
         } else {
             const extrahours = now - 18;
             for (let i = 0; i < (6 - extrahours); i++) {
                 const info = result.data.days[0].hours[now + i];
-                hours.push(info.datatime);
+                hours.push(info.datatime.substring(0,5));
                 temps.push(info.temp);
             }
             for (let i = 0; i < extrahours; i++) {
                 const info = result.data.days[1].hours[i];
-                hours.push(info.datatime);
+                hours.push(info.datatime.substring(0,5));
                 temps.push(info.temp);
             }
         }
@@ -107,7 +116,8 @@ app.post('/submit', async(req, res)=>{
             daysTemps.push(info.temp);
         }
         res.render('index.ejs', {
-            cityName: location,
+            cityName: cityNameCap,
+            condition: condition,
             currentTemp : result.data.currentConditions.temp + '°',
             description: result.data.description,
             feelslike: result.data.currentConditions.feelslike,
@@ -133,3 +143,5 @@ app.post('/submit', async(req, res)=>{
 app.listen(port, (req, res)=>{
     console.log(`Server listening on port ${port}`);
 })
+
+// Pittsburgh

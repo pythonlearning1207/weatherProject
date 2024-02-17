@@ -1,3 +1,7 @@
+/* body {
+    background-image: url('../images/rain.jpg');
+} */
+
 .container {
     display: grid;
     grid-template-rows: repeat(9, 1fr);
@@ -5,7 +9,17 @@
     gap: 10px;
     margin: 10px;
     height: 95vh;
+    
+    color: azure;
+    
+    /* opacity: 0.5; */
 
+}
+.black-box {
+    background-color: rgba(0, 0, 0, 0.8);
+    margin: 10px;
+    border-radius: 15px;
+    padding: 15px;
 }
 
 input {
@@ -15,12 +29,10 @@ input {
 
 .location {
     grid-area: 1/1/2/5;
-    background-color: beige;
 }
 
 .hourly {
     grid-area: 1/5/4/-1;
-    background-color: beige;
 }
 
 .hourlyData {
@@ -28,23 +40,30 @@ input {
     flex-direction: row;
     width: 100%;
     justify-content: space-around;
+    text-align: center;
+}
+
+.current-hour-box, .current-day-box {
+    background-color: rgb(10, 9, 9);
 }
 
 .current {
     grid-area: 2/1/-1/5;
-    background-color: beige;
+    background-color: rgb(51, 71, 110, 0.5);
     display: grid;
     grid-template-rows: repeat(4, 1fr);
     grid-template-columns: 1fr 1fr;
+    border-radius: 15px;
 }
 .current-weather {
     grid-column-start: span 2;
     grid-row-start: span 2;
+    text-align: center;
 }
 
 .period {
     grid-area: 4/5/7/-1;
-    background-color: beige;
+    
 }
 
 .next-6 {
@@ -55,9 +74,9 @@ input {
 }
 .UV {
     grid-area: 7/5/-1/8;
-    background-color: beige;
+    
 }
 .wind {
     grid-area: 7/8/-1/-1;
-    background-color: beige;
+    
 }
