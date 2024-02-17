@@ -44,7 +44,8 @@ input {
 }
 
 .current-hour-box, .current-day-box {
-    background-color: rgb(10, 9, 9);
+    background-color: rgb(146, 144, 144, 0.5);
+    border-radius: 15px;
 }
 
 .current {
@@ -71,6 +72,8 @@ input {
     flex-direction: row;
     width: 100%;
     justify-content: space-around;
+    text-align: center;
+    gap: 5px;
 }
 .UV {
     grid-area: 7/5/-1/8;
