@@ -1,18 +1,20 @@
 import express from 'express';
 import axios from 'axios';
 import bodyParser from 'body-parser';
+import env from "dotenv";
 
 const app = express();
 const port = 3000;
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
-
+env.config();
 app.get('/', async(req, res)=>{
-    const location = 'Seattle'
+    const location = 'Seattle';
     const today = new Date();
     const now = today.getHours();
+    const APIKey = process.env.API_Key;
     try {
-        const result = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=YJC2XAH9LBH2SPM46HZS9W38N&contentType=json`);
+        const result = await axios.get(`https://weather.visualcrossing.com/VisualCrossingWebServices/rest/services/timeline/${location}?unitGroup=us&key=${APIKey}&contentType=json`);
         // const description = JSON.stringify(result.description);
         // console.log(description);
         // res.render('index.ejs', { content: JSON.stringify(result.data.description)})
